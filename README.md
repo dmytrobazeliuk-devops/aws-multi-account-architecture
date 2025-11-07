@@ -1,46 +1,69 @@
 # AWS Multi-Account Architecture
 
-Secure multi-account AWS architecture using AWS Organizations and Control Tower
+Terraform modules for managing AWS Organizations with multiple accounts, organizational units, Service Control Policies (SCPs), and cross-account IAM roles.
 
 ## Features
 
-- **Automated Infrastructure**: Automated provisioning and management
-- **Best Practices**: Follows industry best practices and standards
-- **Scalable**: Designed for scalability and high availability
-- **Documentation**: Comprehensive documentation and examples
+- **AWS Organizations**: Multi-account management
+- **Organizational Units**: Logical grouping of accounts
+- **Service Control Policies**: Centralized security policies
+- **Cross-Account Access**: Secure IAM roles for account access
+- **Account Isolation**: Security and billing isolation
 
-## Tech Stack
+## Architecture
 
-AWS, Terraform, AWS Organizations, CloudTrail
-
-## Installation
-
-### Prerequisites
-
-- See individual module documentation for specific requirements
-
-### Setup
-
-1. Clone the repository:
-```bash
-git clone https://github.com/dmytrobazeliuk-devops//var/www/vhosts/devsecops.cv/projects_repos/aws-multi-account-architecture.git
-cd /var/www/vhosts/devsecops.cv/projects_repos/aws-multi-account-architecture
 ```
-
-2. Follow the setup instructions in the documentation
+Root
+├── Security OU
+│   ├── Security Account
+│   └── Logging Account
+├── Infrastructure OU
+│   ├── Network Account
+│   └── Shared Services Account
+├── Applications OU
+│   ├── Production Account
+│   ├── Staging Account
+│   └── Development Account
+└── Sandbox OU
+    └── Sandbox Accounts
+```
 
 ## Usage
 
-See individual module documentation for usage examples.
+### Initialize Terraform
 
-## Project Structure
-
+```bash
+cd terraform
+terraform init
 ```
-/var/www/vhosts/devsecops.cv/projects_repos/aws-multi-account-architecture/
-├── README.md              # This file
-├── modules/               # Reusable modules
-├── examples/              # Usage examples
-└── docs/                  # Documentation
+
+### Plan
+
+```bash
+terraform plan
+```
+
+### Apply
+
+```bash
+terraform apply
+```
+
+## Configuration
+
+Edit `terraform/organizations.tf` to configure accounts:
+
+```hcl
+accounts = {
+  security = {
+    email   = "security@example.com"
+    name    = "Security"
+    ou_path = "Security"
+    tags = {
+      Environment = "security"
+    }
+  }
+}
 ```
 
 ## Contributing
